@@ -5,7 +5,7 @@ interface DiagnosticsRequest {
   symptoms: string[];
 }
 
-export const diagnostics = async (
+export const diagnosticsController = async (
   req: Request,
   res: Response
 ): Promise<void> => {
@@ -18,7 +18,7 @@ export const diagnostics = async (
 
   try {
     const result = await axios.post(
-      "https://api.infermedica.com/v3/diagnosis",
+      `${process.env.AI_API_ENDPOINT}/ai/diagnostics`,
       body,
       {
         headers: {
@@ -26,12 +26,11 @@ export const diagnostics = async (
         },
       }
     );
-    for await (const textPart of result.data) {
-      res.write(JSON.stringify(textPart));
-    }
+    // for await (const textPart of result.data) {
+    //   res.write(JSON.stringify(textPart));
+    // }
+    res.send(result.data);
   } catch (error) {
     res.status(500).send(error.message);
   }
-
-  res.end();
 };
