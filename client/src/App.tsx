@@ -1,9 +1,13 @@
+import { Routes, Route } from "react-router";
 import "./App.css";
+import Auth from "./pages/Auth";
 
 function App() {
   return (
     <>
-      <p>QuickAid</p>
+      <Routes>
+        <Route path="/auth" element={<Auth />} />
+      </Routes>
     </>
   );
 }
