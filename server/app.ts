@@ -20,4 +20,7 @@ app.use(express.static("public"));
 import diagnostics from "./routes/diagnostics.routes";
 app.use("/api/v1", diagnostics);
 
+import tips from "./routes/tips.routes";
+app.use("/api/v1", tips);
+
 export default app;

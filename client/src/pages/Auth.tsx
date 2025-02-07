@@ -1,14 +1,6 @@
-// function Auth() {
-//   return <div>Auth</div>;
-// }
-
-// export default Auth;
-
-
-
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Github } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { IconBrandGithub, IconBrandGoogleFilled } from "@tabler/icons-react";
 
 export default function Auth() {
   return (
@@ -20,14 +12,15 @@ export default function Auth() {
         <CardContent className="space-y-4">
           <div className="text-center text-lg mb-6">Sign-Up / Sign-In</div>
           <Button className="w-full" variant="outline">
+            <IconBrandGoogleFilled className="mr-2 h-4 w-4" />
             Continue with Google
           </Button>
           <Button className="w-full" variant="outline">
-            <Github className="mr-2 h-4 w-4" />
+            <IconBrandGithub className="mr-2 h-4 w-4" />
             Continue with GitHub
           </Button>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

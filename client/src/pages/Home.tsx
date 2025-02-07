@@ -1,23 +1,17 @@
-// import { Search } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-// import { Input } from "@/components/ui/input"
+import { Card, CardContent } from "@/components/ui/card";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white p-4 mx-auto">
-      {/* Search Bar */}
-      <div className="relative mb-6">
-
-        {/* <Input type="text" placeholder="QuickAid" className="bg-zinc-900 border-zinc-800 text-white pl-4 pr-10" />
-        <Search className="absolute right-3 top-2.5 h-5 w-5 text-zinc-400" /> */}
-      </div>
-
       {/* Horizontal Scroll Area */}
       <ScrollArea className="w-full whitespace-nowrap mb-8 rounded-md">
         <div className="flex w-full space-x-4 p-4">
           {[1, 2, 3, 4].map((item) => (
-            <Card key={item} className="w-[200px] shrink-0 bg-zinc-900 border-zinc-800">
+            <Card
+              key={item}
+              className="w-[200px] shrink-0 bg-zinc-900 border-zinc-800"
+            >
               <CardContent className="p-4">
                 <div className="h-20 rounded-md bg-zinc-800" />
               </CardContent>
@@ -47,7 +41,9 @@ export default function Home() {
             </div>
             <Card className="flex-1 bg-zinc-900 border-zinc-800">
               <CardContent className="p-4">
-                <p className="text-sm">Find nearby doctors/clinics/pharmacies</p>
+                <p className="text-sm">
+                  Find nearby doctors/clinics/pharmacies
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -57,7 +53,9 @@ export default function Home() {
             </div>
             <Card className="flex-1 bg-zinc-900 border-zinc-800">
               <CardContent className="p-4">
-                <p className="text-sm">Get an ambulance in case of any emergency</p>
+                <p className="text-sm">
+                  Get an ambulance in case of any emergency
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -78,5 +76,5 @@ export default function Home() {
         </div>
       </div>
     </div>
-  )
+  );
 }
