@@ -9,6 +9,7 @@ export default function DiagnosticsOptions() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission
+    setSymptoms([...symptoms, "new symptom"]);
     console.log({ symptoms, search });
   };
 
