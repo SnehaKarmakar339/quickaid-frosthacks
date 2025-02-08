@@ -5,7 +5,7 @@ import {
   ChevronLeft,
   ChevronRight,
   AlertCircle,
-  // Ambulance,
+  Ambulance,
   Building2,
   Phone,
   Heart,
@@ -73,12 +73,14 @@ export default function Home() {
               gradient="from-blue-500/10 to-cyan-500/10"
             />
           </Link>
-          {/* <ServiceCard
-            icon={<Ambulance className="w-6 h-6 text-red-400" />}
-            title="Book & track ambulance"
-            subtitle="in case of any emergency"
-            gradient="from-red-500/10 to-pink-500/10"
-          /> */}
+          <Link to="/ambulance">
+            <ServiceCard
+              icon={<Ambulance className="w-6 h-6 text-red-400" />}
+              title="Book & track ambulance"
+              subtitle="in case of any emergency"
+              gradient="from-red-500/10 to-pink-500/10"
+            />
+          </Link>
           {/* <ServiceCard
             icon={<Plus className="w-6 h-6 text-green-400" />}
             title="Emergency"
