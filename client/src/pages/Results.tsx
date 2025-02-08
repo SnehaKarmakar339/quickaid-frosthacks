@@ -1,18 +1,10 @@
-"use client"
-
-import { ChevronLeft, ChevronRight, Home } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+import { ChevronLeft, ChevronRight, Home } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 export default function Results() {
   return (
-    <div className="min-h-screen bg-black text-gray-300">
-      {/* Version number and path */}
-      <div className="p-4 text-sm text-green-500">
-        <span className="font-mono">1.2</span>
-        <span className="text-gray-500 ml-2 font-mono">/app/diagnostics/results</span>
-      </div>
-
+    <div className="min-h-screen bg-black text-gray-300 pt-6">
       {/* Navigation */}
       <div className="border border-gray-800 mx-4 p-2 rounded flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -36,7 +28,7 @@ export default function Results() {
             </div>
             <Button
               variant="outline"
-              className="w-full py-6 text-lg border-gray-800 hover:bg-gray-900 hover:text-gray-100"
+              className="w-full py-6 text-lg border-gray-800 text-gray-200 bg-gray-800"
             >
               DISEASE 1
             </Button>
@@ -53,7 +45,10 @@ export default function Results() {
           <h2 className="text-gray-400">Doctors and Hospitals Nearby</h2>
           <div className="space-y-3">
             {[1, 2, 3].map((index) => (
-              <Card key={index} className="p-4 bg-black border-gray-800 flex justify-between items-center">
+              <Card
+                key={index}
+                className="p-4 bg-black border-gray-800 flex justify-between items-center"
+              >
                 <div className="space-y-1">
                   <div className="h-2 w-32 bg-gray-800 rounded"></div>
                   <div className="h-2 w-48 bg-gray-800 rounded"></div>
@@ -65,5 +60,5 @@ export default function Results() {
         </div>
       </div>
     </div>
-  )
+  );
 }
