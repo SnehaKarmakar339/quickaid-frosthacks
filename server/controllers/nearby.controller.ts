@@ -1,43 +1,43 @@
 import { Request, Response } from "express";
 import axios from "axios";
-import dotenv from "dotenv";
 
-dotenv.config(); // Load environment variables
-
-export const NearbyController = async (req: Request, res: Response): Promise<void> => {
+export const NearbyController = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
-    // Extract request parameters
-    const { name, filter, location } = req.body;
+    const { name, location, filter } = req.body;
+    const radius = 5000; // 5km
+    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
 
-    if (!location) {
-      res.status(400).json({ error: "Location is required (latitude,longitude)." });
+    if (!apiKey) {
+      res.status(500).json({ error: "Google Maps API Key is required." });
       return;
     }
 
-    // Google Places API URL
-    const googleMapsUrl = ``;
+    if (!location) {
+      res
+        .status(400)
+        .json({ error: "Location is required (latitude,longitude)." });
+      return;
+    }
 
-    // API Request Parameters
-    const params = {
-      location, // Latitude,Longitude (e.g., "37.7749,-122.4194")
-      radius: 5000, // 5 km search radius
-      keyword: name, // Search by name if provided
-      type: filter || "hospital", // Default type if not provided
-      key: process.env.GOOGLE_MAPS_API_KEY, // Google Maps API Key
-    };
+    const googleMapsUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location}&radius=${radius}&type=${filter}&key=${apiKey}`;
 
-    // Make request to Google Places API
-    const response = await axios.get(googleMapsUrl, { params });
+    const response = await axios.get(googleMapsUrl);
 
-    // Extract necessary details from response
     const results = response.data.results.map((place: any) => ({
       name: place.name,
       description: place.types?.join(", ") || "No description available",
       address: place.vicinity || "No address available",
       phone: place.formatted_phone_number || "No phone available",
+      link: `https://www.google.com/maps/search/?api=1&query=${
+        place.geometry.location.lat
+      },${place.geometry.location.lng}&query_place_id=${
+        place.place_id
+      }&query_name=${encodeURIComponent(place.name)}`,
     }));
 
-    // Send response to client
     res.json(results);
   } catch (error) {
     console.error("Error fetching nearby places:", error);
