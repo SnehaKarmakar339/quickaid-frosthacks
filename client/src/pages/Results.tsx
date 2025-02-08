@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Link } from "react-router";
 
 export default function Results() {
   return (
@@ -8,12 +9,14 @@ export default function Results() {
       {/* Navigation */}
       <div className="border border-gray-800 mx-4 p-2 rounded flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <ChevronLeft className="w-4 h-4" />
+          <Link to="/home" className="flex items-center gap-2">
+            <ChevronLeft className="h-4 w-4" />
+          </Link>
           <span>Recommendations</span>
         </div>
-        <Button variant="ghost" size="icon">
+        <Link to="/home" className="text-gray-400 hover:text-gray-200">
           <Home className="w-4 h-4" />
-        </Button>
+        </Link>
       </div>
 
       {/* Main content */}
