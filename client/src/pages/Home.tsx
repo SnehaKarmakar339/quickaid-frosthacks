@@ -4,17 +4,18 @@ import { Badge } from "@/components/ui/badge";
 import {
   ChevronLeft,
   ChevronRight,
-  // AlertCircle,
+  AlertCircle,
   // Ambulance,
   Building2,
   Phone,
   Heart,
   Activity,
-  Plus,
+  // Plus,
   Clock,
 } from "lucide-react";
 import React, { useEffect } from "react";
 import { Link } from "react-router";
+import axios from "axios";
 
 export default function Home() {
   const [activeSlide, setActiveSlide] = React.useState(0);
@@ -26,8 +27,8 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch("/api/v1/tips");
-      const data = await res.json();
+      const res = await axios.get("/api/v1/tips");
+      const data = res.data;
       setTips(data);
     }
     fetchData();
@@ -43,7 +44,7 @@ export default function Home() {
         </div>
         <div className="flex items-center gap-2 text-sm">
           <Badge variant="outline" className="bg-blue-500/10 text-blue-400">
-            KD
+            User
           </Badge>
           <Avatar className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500" />
         </div>
@@ -56,15 +57,15 @@ export default function Home() {
           Quick Services
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Link to="/diagnostics/symptoms">
+          <Link to="/diagnostics">
             <ServiceCard
-              icon={<Plus className="w-6 h-6 text-red-500" />}
+              icon={<AlertCircle className="w-6 h-6 text-yellow-400" />}
               title="Feeling unwell ?"
               subtitle="Get help !"
               gradient="from-yellow-500/10 to-orange-500/10"
             />
           </Link>
-          <Link to="/find-nerby">
+          <Link to="/nearby">
             <ServiceCard
               icon={<Building2 className="w-6 h-6 text-blue-400" />}
               title="Find nearby"
@@ -77,8 +78,8 @@ export default function Home() {
             title="Book & track ambulance"
             subtitle="in case of any emergency"
             gradient="from-red-500/10 to-pink-500/10"
-          />
-          <ServiceCard
+          /> */}
+          {/* <ServiceCard
             icon={<Plus className="w-6 h-6 text-green-400" />}
             title="Emergency"
             subtitle="Contact Services"
