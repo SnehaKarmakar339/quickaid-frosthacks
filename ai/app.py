@@ -24,6 +24,7 @@ def ai_text():
     except:
         return 400
     
+    
 
 @app.route("/ai/list", methods=["POST"])
 def ai_list():
