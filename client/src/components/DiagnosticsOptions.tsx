@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export default function DiagnosticsOptions() {
-  const [symptoms, setSymptoms] = useState(["", "", ""]);
+  const [symptoms, setSymptoms] = useState(["s1", "s2", ""]);
   const [search, setSearch] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -25,17 +25,12 @@ export default function DiagnosticsOptions() {
           />
 
           {symptoms.map((symptom, index) => (
-            <Input
+            <div
               key={index}
-              placeholder={`Symp ${index + 1}`}
-              value={symptom}
-              onChange={(e) => {
-                const newSymptoms = [...symptoms];
-                newSymptoms[index] = e.target.value;
-                setSymptoms(newSymptoms);
-              }}
               className="bg-transparent border-gray-700 focus:border-gray-600"
-            />
+            >
+              {symptom}
+            </div>
           ))}
 
           <Button

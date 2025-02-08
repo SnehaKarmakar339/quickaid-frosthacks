@@ -13,7 +13,8 @@ import {
   Plus,
   Clock,
 } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
+import { Link } from "react-router";
 
 export default function Home() {
   const [activeSlide, setActiveSlide] = React.useState(0);
@@ -21,13 +22,16 @@ export default function Home() {
     { title: "Emergency Helpline", number: "112", badge: "24/7" },
     { title: "Medical Support", number: "102", badge: "Toll Free" },
   ];
+  const [tips, setTips] = React.useState([]);
 
-  const healthTips = [
-    "Stay hydrated - Drink 8 glasses of water daily",
-    "Get 7-9 hours of sleep each night",
-    "Exercise for at least 30 minutes daily",
-    "Practice mindfulness and meditation",
-  ];
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch("/api/v1/tips");
+      const data = await res.json();
+      setTips(data);
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white p-4">
@@ -52,18 +56,22 @@ export default function Home() {
           Quick Services
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <ServiceCard
-            icon={<Plus className="w-6 h-6 text-red-500" />}
-            title="Feeling unwell ?"
-            subtitle="Get help !"
-            gradient="from-yellow-500/10 to-orange-500/10"
-          />
-          <ServiceCard
-            icon={<Building2 className="w-6 h-6 text-blue-400" />}
-            title="Find nearby"
-            subtitle="doctors / clinics / pharmacies"
-            gradient="from-blue-500/10 to-cyan-500/10"
-          />
+          <Link to="/diagnostics/symptoms">
+            <ServiceCard
+              icon={<Plus className="w-6 h-6 text-red-500" />}
+              title="Feeling unwell ?"
+              subtitle="Get help !"
+              gradient="from-yellow-500/10 to-orange-500/10"
+            />
+          </Link>
+          <Link to="/find-nerby">
+            <ServiceCard
+              icon={<Building2 className="w-6 h-6 text-blue-400" />}
+              title="Find nearby"
+              subtitle="doctors / clinics / pharmacies"
+              gradient="from-blue-500/10 to-cyan-500/10"
+            />
+          </Link>
           {/* <ServiceCard
             icon={<Ambulance className="w-6 h-6 text-red-400" />}
             title="Book & track ambulance"
@@ -86,7 +94,7 @@ export default function Home() {
           Daily Health Tips
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {healthTips.map((tip, index) => (
+          {tips.map((tip, index) => (
             <Card
               key={index}
               className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-gray-700"
