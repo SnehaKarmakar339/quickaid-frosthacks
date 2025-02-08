@@ -26,5 +26,4 @@ app.use("/api/v1", tips);
 import nearby from "./routes/nearby.routes";
 app.use("/api/v1", nearby);
 
-
 export default app;

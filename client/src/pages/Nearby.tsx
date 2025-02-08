@@ -8,13 +8,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-// import { Card } from "@/components/ui/card";
-// import { IconMapPinFilled } from "@tabler/icons-react";
+import { IconDirectionsFilled, IconMapPinFilled } from "@tabler/icons-react";
+import { Geolocation } from "@capacitor/geolocation";
 import { Link } from "react-router";
 import { useState } from "react";
+import axios from "axios";
+import { Card } from "@/components/ui/card";
+
+interface INearbyItem {
+  name: string;
+  description: string;
+  address: string;
+  phone: string;
+  link: string;
+}
 
 export default function Nearby() {
+  const [nearby, setNearby] = useState<INearbyItem[]>([]);
   const [location, setLocation] = useState("");
+  const [selectedValue, setSelectedValue] = useState("clinic");
+
+  async function handleFind() {
+    console.log(location);
+    console.log(selectedValue);
+
+    const res = await axios.post("/api/v1/nearby", {
+      location,
+      filter: selectedValue,
+    });
+
+    setNearby(res.data);
+  }
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-50 p-4">
@@ -38,52 +62,74 @@ export default function Nearby() {
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           />
-          {/* <Button className="w-full bg-emerald-600 hover:bg-emerald-500 text-white">
+          <Button
+            className="w-full bg-emerald-600 hover:bg-emerald-500 text-white"
+            onClick={async () => {
+              const coordinates = await Geolocation.getCurrentPosition();
+              setLocation(
+                `${coordinates.coords.latitude},${coordinates.coords.longitude}`
+              );
+            }}
+          >
             <IconMapPinFilled className="h-5 w-5" />
             Use Current Location
-          </Button> */}
-
+          </Button>
           <div className="space-y-2">
             <label className="text-sm text-zinc-400">Filter:</label>
-            <Select defaultValue="clinic">
+            <Select
+              value={selectedValue}
+              onValueChange={(e) => {
+                setSelectedValue(e);
+              }}
+            >
               <SelectTrigger className="w-full bg-zinc-900 border-zinc-800">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-zinc-900 border-zinc-800 text-gray-100">
-                <SelectItem value="clinic">clinic, hospital</SelectItem>
-                <SelectItem value="pharmacy">pharmacy</SelectItem>
+                <SelectItem value="dentist">dentist</SelectItem>
+                <SelectItem value="doctor">doctor</SelectItem>
                 <SelectItem value="emergency">emergency</SelectItem>
+                <SelectItem value="pharmacy">pharmacy</SelectItem>
+                <SelectItem value="hospital">hospital</SelectItem>
               </SelectContent>
             </Select>
           </div>
-
-          <Button className="w-full bg-emerald-600 hover:bg-emerald-500 text-white">
+          <Button
+            onClick={handleFind}
+            className="w-full bg-emerald-600 hover:bg-emerald-500 text-white"
+          >
             Find Nearby
           </Button>
         </div>
+      </div>
 
-        {/* History Section */}
-        {/* <div className="space-y-4">
-          <h2 className="text-zinc-400 text-sm">Search History / Recommend</h2>
-          {[1, 2].map((item) => (
-            <Card
-              key={item}
-              className="bg-zinc-900/50 border-zinc-800 p-4 flex items-center justify-between"
-            >
-              <div className="space-y-1">
-                <div className="h-2 w-32 bg-zinc-800 rounded animate-pulse" />
-                <div className="h-2 w-48 bg-zinc-800 rounded animate-pulse" />
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-zinc-400 hover:text-zinc-50"
+      {nearby.length > 1 && (
+        <h2 className="text-gray-400 text-lg mt-10 mb-2">Nearby:</h2>
+      )}
+      <div className="space-y-3">
+        {nearby.map((item, index) => (
+          <Card
+            key={index}
+            className="p-4 bg-black border-gray-800 flex justify-between items-center"
+          >
+            <div className="space-y-1">
+              <h2 className="">{item?.name}</h2>
+              <h3 className="">{item?.description}</h3>
+              <p className="">{item?.address}</p>
+              <p className="">{item?.phone}</p>
+            </div>
+            <div className="h-6 w-6 rounded-ful">
+              <a
+                href={item?.link}
+                target="_blank"
+                rel="noreferrer"
+                className="h-6 w-6 rounded-full bg-gray-800"
               >
-                <ChevronDown className="h-4 w-4" />
-              </Button>
-            </Card>
-          ))}
-        </div> */}
+                <IconDirectionsFilled className="h-6 w-6" />
+              </a>
+            </div>
+          </Card>
+        ))}
       </div>
     </div>
   );
