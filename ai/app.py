@@ -16,7 +16,10 @@ def ai_text():
         print(f"Extracted symptoms: {extracted_symptoms}")
         matched_symptoms = model.match_symptoms(extracted_symptoms)
         print(f"Matched symptoms: {matched_symptoms}")
+        if matched_symptoms == []:
+            return jsonify({"disease": "No matching symptoms found."})
         predicted_disease = model.predict_disease(matched_symptoms)
+        print(f"Predicted disease: {predicted_disease}")
         return jsonify({"disease": predicted_disease})
     except:
         return 400
