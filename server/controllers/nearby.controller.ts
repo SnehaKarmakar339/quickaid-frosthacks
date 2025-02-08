@@ -6,8 +6,8 @@ export const NearbyController = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { name, location, filter } = req.body;
-    const radius = 5000; // 5km
+    let { name, location, filter, addr } = req.body;
+    const radius = 10000; // 10km
     const apiKey = process.env.GOOGLE_MAPS_API_KEY;
 
     if (!apiKey) {
@@ -15,14 +15,23 @@ export const NearbyController = async (
       return;
     }
 
-    if (!location) {
-      res
-        .status(400)
-        .json({ error: "Location is required (latitude,longitude)." });
-      return;
+    let googleMapsUrl = "";
+
+    if (addr) {
+      const googleMapsUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+        addr
+      )}&key=${apiKey}`;
+
+      const response = await axios.get(googleMapsUrl);
+      location = `${response.data.results[0].geometry.location.lat},${response.data.results[0].geometry.location.lng}`;
     }
 
-    const googleMapsUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location}&radius=${radius}&type=${filter}&key=${apiKey}`;
+    if (name) {
+      const keyword = encodeURIComponent(name);
+      googleMapsUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location}&radius=${radius}&keyword=${keyword}&key=${apiKey}`;
+    } else {
+      googleMapsUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location}&radius=${radius}&type=${filter}&key=${apiKey}`;
+    }
 
     const response = await axios.get(googleMapsUrl);
 
@@ -37,7 +46,7 @@ export const NearbyController = async (
         place.place_id
       }&query_name=${encodeURIComponent(place.name)}`,
     }));
-
+    console.log(results);
     res.json(results);
   } catch (error) {
     console.error("Error fetching nearby places:", error);
