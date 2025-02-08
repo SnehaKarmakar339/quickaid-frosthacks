@@ -5,7 +5,7 @@ import {
   ChevronLeft,
   ChevronRight,
   AlertCircle,
-  Ambulance,
+  // Ambulance,
   Building2,
   Phone,
   Heart,
@@ -43,9 +43,9 @@ export default function Home() {
           <h1 className="text-2xl font-mono">QuickAid</h1>
         </div>
         <div className="flex items-center gap-2 text-sm">
-          <Badge variant="outline" className="bg-blue-500/10 text-blue-400">
+          {/* <Badge variant="outline" className="bg-blue-500/10 text-blue-400">
             User
-          </Badge>
+          </Badge> */}
           <Avatar className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500" />
         </div>
       </header>
@@ -73,14 +73,14 @@ export default function Home() {
               gradient="from-blue-500/10 to-cyan-500/10"
             />
           </Link>
-          <Link to="/ambulance">
+          {/* <Link to="/ambulance">
             <ServiceCard
               icon={<Ambulance className="w-6 h-6 text-red-400" />}
               title="Book & track ambulance"
               subtitle="in case of any emergency"
               gradient="from-red-500/10 to-pink-500/10"
             />
-          </Link>
+          </Link> */}
           {/* <ServiceCard
             icon={<Plus className="w-6 h-6 text-green-400" />}
             title="Emergency"

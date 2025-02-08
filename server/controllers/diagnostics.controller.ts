@@ -14,32 +14,26 @@ export const diagnosticsController = async (
 ): Promise<void> => {
   const body: DiagnosticsRequest = req.body;
 
-  console.log(body.data);
+  try {
+    const result = await axios.post(
+      `${process.env.AI_API_ENDPOINT}/ai/text`,
+      {
+        prompt: body.data.symptomsText,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-  res.json({
-    data: {
-      desease: "name",
-      description: "description",
-    },
-  });
-
-  // try {
-  //   const result = await axios.post(
-  //     `${process.env.AI_API_ENDPOINT}/ai/diagnostics`,
-  //     body.data,
-  //     {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     }
-  //   );
-  //   res.write({
-  //     data: {
-  //       deseases: result.data.deseases,
-  //     },
-  //   });
-  //   res.end();
-  // } catch (error) {
-  //   res.status(500).send(error.message);
-  // }
+    res.json({
+      data: {
+        disease: result.data.disease,
+        description: `https://www.google.com/search?q=${result.data.disease}`,
+      },
+    });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 };

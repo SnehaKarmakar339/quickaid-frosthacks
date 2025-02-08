@@ -1,7 +1,5 @@
 import { ArrowLeft } from "lucide-react";
-import DiagnosticsOptions from "@/components/DiagnosticsOptions";
 import DiagnosticsText from "@/components/DiagnosticsText";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "react-router";
 import { useState } from "react";
 import Results from "@/pages/Results";
@@ -9,13 +7,13 @@ import Results from "@/pages/Results";
 export default function Diagnostics() {
   const [isFinding, setIsFinding] = useState(false);
   const [result, setResult] = useState({
-    data: { desease: "", description: "" },
+    data: { disease: "", description: "" },
   });
 
   return (
     <>
       {isFinding ? (
-        <Results result={result} />
+        <Results result={result} setIsFinding={setIsFinding} />
       ) : (
         <div className="bg-gradient-to-b from-gray-900 to-black text-white">
           <div className="p-4 border-b border-gray-800">
@@ -31,21 +29,7 @@ export default function Diagnostics() {
               </Link>
             </div>
           </div>
-          <Tabs defaultValue="text">
-            <TabsList className="grid w-full grid-cols-2 p-4">
-              <TabsTrigger value="text">Text</TabsTrigger>
-              <TabsTrigger value="options">Options</TabsTrigger>
-            </TabsList>
-            <TabsContent value="text">
-              <DiagnosticsText
-                setIsFinding={setIsFinding}
-                setResult={setResult}
-              />
-            </TabsContent>
-            <TabsContent value="options">
-              <DiagnosticsOptions />
-            </TabsContent>
-          </Tabs>
+          <DiagnosticsText setIsFinding={setIsFinding} setResult={setResult} />
         </div>
       )}
     </>

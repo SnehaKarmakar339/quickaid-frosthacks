@@ -26,16 +26,21 @@ interface INearbyItem {
 export default function Nearby() {
   const [nearby, setNearby] = useState<INearbyItem[]>([]);
   const [location, setLocation] = useState("");
-  const [selectedValue, setSelectedValue] = useState("clinic");
+  const [selectedValue, setSelectedValue] = useState("hospital");
 
   async function handleFind() {
-    console.log(location);
-    console.log(selectedValue);
-
-    const res = await axios.post("/api/v1/nearby", {
-      location,
-      filter: selectedValue,
-    });
+    let res;
+    if (location.includes(",")) {
+      res = await axios.post("/api/v1/nearby", {
+        location,
+        filter: selectedValue,
+      });
+    } else {
+      res = await axios.post("/api/v1/nearby", {
+        addr: location,
+        filter: selectedValue,
+      });
+    }
 
     setNearby(res.data);
   }
