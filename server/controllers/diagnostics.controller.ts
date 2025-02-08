@@ -2,7 +2,10 @@ import { Request, Response } from "express";
 import axios from "axios";
 
 interface DiagnosticsRequest {
-  symptoms: string[];
+  data: {
+    symptomsText: string;
+    symptomsOptions: string[];
+  };
 }
 
 export const diagnosticsController = async (
@@ -11,26 +14,32 @@ export const diagnosticsController = async (
 ): Promise<void> => {
   const body: DiagnosticsRequest = req.body;
 
-  res.setHeader("Cache-Control", "no-cache");
-  res.setHeader("Connection", "keep-alive");
-  res.setHeader("Content-Type", "text/event-stream");
-  res.flushHeaders();
+  console.log(body.data);
 
-  try {
-    const result = await axios.post(
-      `${process.env.AI_API_ENDPOINT}/ai/diagnostics`,
-      body,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    // for await (const textPart of result.data) {
-    //   res.write(JSON.stringify(textPart));
-    // }
-    res.send(result.data);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
+  res.json({
+    data: {
+      desease: "name",
+      description: "description",
+    },
+  });
+
+  // try {
+  //   const result = await axios.post(
+  //     `${process.env.AI_API_ENDPOINT}/ai/diagnostics`,
+  //     body.data,
+  //     {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   );
+  //   res.write({
+  //     data: {
+  //       deseases: result.data.deseases,
+  //     },
+  //   });
+  //   res.end();
+  // } catch (error) {
+  //   res.status(500).send(error.message);
+  // }
 };
