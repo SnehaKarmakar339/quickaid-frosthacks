@@ -46,7 +46,7 @@ export const NearbyController = async (
         place.place_id
       }&query_name=${encodeURIComponent(place.name)}`,
     }));
-    console.log(results);
+    // console.log(results);
     res.json(results);
   } catch (error) {
     console.error("Error fetching nearby places:", error);

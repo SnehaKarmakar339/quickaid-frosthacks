@@ -37,7 +37,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white p-4">
       {/* Header */}
-      <header className="flex items-center justify-between p-4 bg-gray-800/50 backdrop-blur-sm rounded-lg mb-20 border border-gray-700">
+      <header className="flex items-center justify-between p-4 bg-gray-800/50 backdrop-blur-sm rounded-lg mb-12 border border-gray-700">
         <div className="flex items-center gap-2">
           <Heart className="w-6 h-6 text-red-500" />
           <h1 className="text-2xl font-mono">QuickAid</h1>
