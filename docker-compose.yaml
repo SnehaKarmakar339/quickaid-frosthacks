@@ -1,0 +1,23 @@
+services:
+  fontend:
+    build:
+      context: client
+      dockerfile: Dockerfile
+      tags:
+        - quickaid/fontend:latest
+    networks:
+      - npm
+
+  backend:
+    build:
+      context: server
+      dockerfile: Dockerfile
+      tags:
+        - quickaid/backend:latest
+    networks:
+      - npm
+
+networks:
+  npm:
+    name: npm
+    external: true

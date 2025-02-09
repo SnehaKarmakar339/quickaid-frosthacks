@@ -15,7 +15,7 @@ app.use(
 
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
-app.use(express.static("public"));
+// app.use(express.static("../client/dist"));
 
 import diagnostics from "./routes/diagnostics.routes";
 app.use("/api/v1", diagnostics);
