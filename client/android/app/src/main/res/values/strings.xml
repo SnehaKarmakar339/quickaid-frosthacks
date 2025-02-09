@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">QuickAid</string>
+    <string name="title_activity_main">QuickAid</string>
+    <string name="package_name">com.turingdevs.quickaid</string>
+    <string name="custom_url_scheme">com.turingdevs.quickaid</string>
+</resources>
